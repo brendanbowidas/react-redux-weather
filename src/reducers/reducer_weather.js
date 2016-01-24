@@ -1,4 +1,5 @@
-import { FETCH_WEATHER } from '../actions/index';
+import { FETCH_WEATHER, REMOVE_ITEM } from '../actions/index';
+
 
 export default function(state = [], action) {
   switch(action.type) {
@@ -7,6 +8,11 @@ export default function(state = [], action) {
         action.payload.data,
         ...state
 
+        ];
+      case REMOVE_ITEM:
+        return [
+          ...state.slice(0, action.index),
+          ...state.slice(action.index + 1)
         ];
   }
   return state;

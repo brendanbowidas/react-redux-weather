@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import { removeWeather } from '../actions/index';
 import Chart from '../components/chart';
+import GoogleMap from '../components/google_map';
 
  class WeatherList extends Component {
+   constructor(props) {
+     super(props);
+     this._remove = this._remove.bind(this);
+   }
+
    _renderWeather(cityData) {
      const name = cityData.city.name;
      const temps = cityData.list.map(weather => weather.main.temp);
      const humidity = cityData.list.map(weather => weather.main.humidity);
      const pressure = cityData.list.map(weather => weather.main.pressure);
-
+     const  { lon, lat } = cityData.city.coord;
 
      return (
        <tr key={name}>
-         <td>{name}</td>
+         <td><GoogleMap lon={lon} lat={lat} /></td>
          <td>
-           <Chart key={temps} color="red" data={temps} />   
+           <Chart key={temps} color="red" data={temps} />
          </td>
          <td>
            <Chart key={humidity} color="blue" data={humidity} />
@@ -54,4 +60,8 @@ function mapStateToProps(state) {
 
 }
 
-export default connect(mapStateToProps)(WeatherList);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({removeWeather: removeWeather}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WeatherList);

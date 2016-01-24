@@ -2,7 +2,7 @@ import axios from 'axios';
 const API_KEY="ba2b50581d781f9cfaa1a011f6bff9aa";
 const ROOT_URL = "http://api.openweathermap.org/data/2.5/forecast?";
 export const FETCH_WEATHER = 'FETCH_WEATHER';
-export const REMOVE_WEATHER = 'REMOVE_WEATHER';
+export const REMOVE_ITEM = 'REMOVE_ITEM';
 
 
 export function fetchWeather(city) {
@@ -17,10 +17,9 @@ const request =  axios.get(url);
   };
 }
 
-export function removeWeather(city) {
-
+export function removeWeather() {
+  console.log('fired');
   return {
-    type: REMOVE_WEATHER,
-    city: city
+    type: REMOVE_ITEM
   }
 }
